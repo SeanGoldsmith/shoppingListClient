@@ -17,6 +17,18 @@
         <button onclick="getShoppingList()">Generate!</button>
         <p id="shoppingListOutput"></p>
     </div>
+    <div>
+        <label for="ingName">Ingredient Name:</label>
+        <input type="text" id="ingName" name="ingName">
+        <label for="countBool">Ingredient measured by count.</label>
+        <input type="checkbox" id="countBool" name="countBool">
+        <button id="addIng" onclick="addIngredient()">Add Ingredient!</button> 
+    </div>
+    <div>
+        <ul id="ingList">
+            
+        </ul>
+    </div>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
     <script src="js/scripts.js"></script>

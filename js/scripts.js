@@ -14,6 +14,18 @@ async function getRecipeList() {
     })
 }
 
+async function getIngredientList() {
+    let ingList = document.getElementById("ingList");
+    let ingredients = axios('http:localhost:3200/getIngredients/').then(data => {
+        data.data.forEach(element => {
+            let newElem = document.createElement('li');
+            let newText = document.createTextNode(element.name);
+            newElem.appendChild(newText);
+            ingList.appendChild(newElem);
+        })
+    })
+}
+
 function addToUsingList(recipeElem) {
     let clone = recipeElem.cloneNode(true);
     let usingList = document.getElementById('recipiesUsedList');
@@ -50,8 +62,17 @@ async function getShoppingList() {
     })
 }
 
-
+async function addIngredient() {
+    var ingName = document.getElementById("ingName").value;
+    var countBool = document.getElementById("countBool").checked;
+    axios.post(`http://localhost:3200/new-ingredient/${ingName}/${countBool}`).then(data => {
+        console.log(data.data);
+    }).catch(err => {
+        console.log(err.response.data.message);
+    })
+}
 
 getRecipeList();
+getIngredientList();
 
 
