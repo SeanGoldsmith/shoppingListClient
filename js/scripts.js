@@ -18,10 +18,17 @@ async function getIngredientList() {
     let ingList = document.getElementById("ingList");
     let ingredients = axios('http:localhost:3200/getIngredients/').then(data => {
         data.data.forEach(element => {
+            let finalDiv = document.createElement('div');
             let newElem = document.createElement('li');
             let newText = document.createTextNode(element.name);
             newElem.appendChild(newText);
-            ingList.appendChild(newElem);
+            newElem.setAttribute('isCount',element.isMeasuredByCount);
+            newElem.onclick=() => {
+                addToUsedIngredients(finalDiv);
+            }
+            newElem.style.display='inline';
+            finalDiv.appendChild(newElem)
+            ingList.appendChild(finalDiv);
         })
     })
 }
@@ -30,6 +37,34 @@ function addToUsingList(recipeElem) {
     let clone = recipeElem.cloneNode(true);
     let usingList = document.getElementById('recipiesUsedList');
     usingList.appendChild(clone);
+}
+
+function addToUsedIngredients(ingElem) {
+    let clone = ingElem.cloneNode(true);
+    let usingList = document.getElementById('ingredientsUsed');
+    if(clone.firstChild.getAttribute('isCount')=='true') {
+        let input = document.createElement('INPUT');
+        input.setAttribute('type','number');
+        input.style.display='inline';
+        clone.appendChild(input);
+    }
+    else {
+        let input = document.createElement('INPUT');
+        input.setAttribute('type','number');
+        input.style.display='inline';
+        clone.appendChild(input);
+        let select = document.createElement('select');
+        select.innerHTML+=returnOptionsHtml();
+        clone.appendChild(select);
+    }
+    usingList.appendChild(clone);
+}
+
+function returnOptionsHtml() {
+    let html = "<option value='tbs'>tbs</option> \
+                <option value='tbsp'>tbsp</option> \
+                <option value='cups'>cups</option>";
+    return html;
 }
 
 function printShoppingList(data) {
