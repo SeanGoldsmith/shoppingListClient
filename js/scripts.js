@@ -1,3 +1,5 @@
+let listOfIngredients = [];
+
 async function getRecipeList() {
     let recipeList = document.getElementById('recipeList');
     let recipes = axios('http:localhost:3200/recipes/').then(data => {
@@ -14,28 +16,37 @@ async function getRecipeList() {
     })
 }
 
+// async function getIngredientList() {
+//     let ingList = document.getElementById("ingList");
+//     let ingredients = axios('http:localhost:3200/getIngredients/').then(data => {
+//         data.data.forEach(element => {
+//             let finalDiv = document.createElement('div');
+//             let newElem = document.createElement('li');
+//             let newText = document.createTextNode(element.name);
+//             newElem.appendChild(newText);
+//             newElem.setAttribute('isCount',element.isMeasuredByCount);
+//             newElem.onclick=() => {
+//                 addToUsedIngredients(finalDiv);
+//             }
+//             newElem.style.display='inline';
+//             finalDiv.appendChild(newElem);
+//             ingList.appendChild(finalDiv);
+//         })
+//     })
+// }
+
 async function getIngredientList() {
-    let ingList = document.getElementById("ingList");
     let ingredients = axios('http:localhost:3200/getIngredients/').then(data => {
-        data.data.forEach(element => {
-            let finalDiv = document.createElement('div');
-            let newElem = document.createElement('li');
-            let newText = document.createTextNode(element.name);
-            newElem.appendChild(newText);
-            newElem.setAttribute('isCount',element.isMeasuredByCount);
-            newElem.onclick=() => {
-                addToUsedIngredients(finalDiv);
-            }
-            newElem.style.display='inline';
-            finalDiv.appendChild(newElem)
-            ingList.appendChild(finalDiv);
-        })
-    })
+                data.data.forEach(element => {
+                    listOfIngredients.push(element);
+                })
+            })
 }
 
 function addToUsingList(recipeElem) {
     let clone = recipeElem.cloneNode(true);
     let usingList = document.getElementById('recipiesUsedList');
+    clone.classList.add("animate-in");
     usingList.appendChild(clone);
 }
 
@@ -61,19 +72,23 @@ function addToUsedIngredients(ingElem) {
 }
 
 function returnOptionsHtml() {
-    let html = "<option value='tbs'>tbs</option> \
+    let html = "<option value='tsp'>tsp</option> \
                 <option value='tbsp'>tbsp</option> \
                 <option value='cups'>cups</option>";
     return html;
 }
 
 function printShoppingList(data) {
+    let app = document.getElementById("app");
+    let container = document.getElementsByClassName('output-container');
+    let shoppingListOutput = document.getElementById('shoppingListOutput')
     let listOfKeys = Object.keys(data);
     let text = "";
     listOfKeys.forEach(elem => {
         text += `${elem}: ${data[elem].amount} ${data[elem].measure} <br>`;
     })
-    document.getElementById('shoppingListOutput').innerHTML=text;
+    shoppingListOutput.innerHTML=text;
+    container[0].style.visibility='visible';
 }
 
 async function generateRecipeList() {
@@ -98,13 +113,69 @@ async function getShoppingList() {
 }
 
 async function addIngredient() {
-    var ingName = document.getElementById("ingName").value;
-    var countBool = document.getElementById("countBool").checked;
+    let ingName = document.getElementById("ingName").value;
+    let countBool = document.getElementById("countBool").checked;
+    console.log(countBool);
     axios.post(`http://localhost:3200/new-ingredient/${ingName}/${countBool}`).then(data => {
         console.log(data.data);
     }).catch(err => {
         console.log(err.response.data.message);
     })
+}
+
+async function sendRecipe() {
+    let tags = document.getElementById("tags").value;
+    let link = document.getElementById("link").value;
+    let name = document.getElementById("recipeName").value;
+    let ingredientChildren = document.getElementById("ingredientsUsed").children;
+    let ingredientsList = [];
+    for(let i = 0; i < ingredientChildren.length;i++) {
+        let newIng = {};
+        newIng.name = ingredientChildren[i].firstChild.textContent;
+        newIng.amount = ingredientChildren[i].getElementsByTagName('input')[0].value;
+        if(ingredientChildren[i].children.length==3){
+            newIng.measure = ingredientChildren[i].getElementsByTagName('select')[0].value;
+        }
+        else {
+            newIng.measure = "count";
+        }
+        ingredientsList.push(newIng);
+    }
+    let recipe = {"name":name,"link":link,"tags":tags,"ingredients":ingredientsList};
+    axios.post("http://localhost:3200/new-recipe",recipe).then(data => {
+        console.log(data.data);
+    }).catch(err => {
+        console.log(err.response.data.message);
+    })
+}
+
+function removeOldListItems() {
+    let listItems = document.getElementsByClassName('selection-items');
+    while(listItems[0]) {
+        listItems[0].parentNode.removeChild(listItems[0]);
+    }
+}
+    
+
+function narrowSearch(event) {
+    if (event.keyCode==8) {
+        removeOldListItems();
+        return;
+    }
+    removeOldListItems();
+    let selectionContainer = document.createElement("DIV");
+    let input = document.getElementById('ingredient-filter');
+    let currentValue = input.value;
+    listOfIngredients.forEach(ing => {
+        if (ing.name.substr(0,currentValue.length) == currentValue) {
+            let newSelection = document.createElement("DIV");
+            let newText = document.createTextNode(ing.name);
+            newSelection.appendChild(newText);
+            selectionContainer.appendChild(newSelection);
+        }
+    })
+    selectionContainer.classList.add("selection-items");
+    document.getElementById("autofill-container").appendChild(selectionContainer);
 }
 
 getRecipeList();

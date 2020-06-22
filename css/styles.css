@@ -1,3 +1,118 @@
+:root {
+   --gutter: 2em; 
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+#app {
+    width: 65%;
+    min-height: 80vh;
+    margin: var(--gutter) auto;
+    border: lightblue solid 08px;
+    border-radius: 1%;
+}
+
+#ingList {
+    width: 80%;
+}
+
+.col-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.list-box {
+    margin: 2% 5%;
+    padding: 2% 5%;
+    border: black solid 2px;
+    border-radius: 1%;
+}
+
+.full-width {
+    width: 80%;
+}
+
+.col {
+    width: 40%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
 .display-inline {
     display: inline;
 }
+
+.nav-bar {
+    width: 100%;
+    background-color: black;
+    color: white;
+    padding: 15px;
+    font-size: 1.5em;
+}
+
+.nav-element {
+    padding: 0 15px;
+}
+
+.nav-link {
+ text-decoration: none;
+ color: white;
+}
+
+.col-title {
+    width: 100%;
+    text-align: center;
+}
+
+.list {
+    text-decoration: none;
+    list-style: none;
+    text-align: center;
+}
+
+.output-container {
+    visibility: hidden;
+}
+
+.output-button {
+    width: 100%;
+    margin: auto;
+}
+
+.shopping-list {
+    text-align: center;
+}
+
+.autofill-container {
+    width: 300px;
+}
+
+.ingredient-input {
+    width: 100%;
+    font-size: 1.2em;
+}
+
+.input-max-height {
+    max-height: 2em;
+}
+
+.animate-in {
+    animation: animate-in 0.4s ease-in;
+}
+
+@keyframes animate-in {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+

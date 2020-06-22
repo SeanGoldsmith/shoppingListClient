@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <title>Shopping List Generator</title>
+</head>
+<body>
+    <div id="app">
+        <div class="nav-bar">
+            <ul id="nav">
+                <li class="display-inline nav-element"><a class="nav-link" href="index.html">Shopping List</a></li>
+                <li class="display-inline nav-element"><a class="nav-link" href="recipes.html">Recipes</a></li>
+            </ul>
+        </div>
+        <div class="col-container">
+            <div class="full-width list-box">
+                <label for="ingName">Ingredient Name:</label>
+                <input type="text" id="ingName" name="ingName">
+                <label for="countBool">Ingredient measured by count.</label>
+                <input type="checkbox" id="countBool" name="countBool">
+                <button id="addIng" onclick="addIngredient()">Add Ingredient!</button> 
+            </div>
+            <div class="full-width list-box">
+                <div id="autofill-container">
+                    <input class="ingredient-input" type="text" id="ingredient-filter" onkeyup="narrowSearch(event)" placeholder="Search for ingredients...">
+                </div>
+                
+
+                <ul id="ingredientsUsed">  
+                </ul>
+                <br>
+                <div class="input-field">
+                    <label for="recipeName">Recipe Name:</label>
+                    <input type="text" id="recipeName" name="recipeName" class="input-max-height">
+                </div>
+                <div class="input-field">
+                    <label for="link">Link:</label>
+                    <input type="text" id="link" name="link" class="input-max-height">
+                </div>
+                <div class="input-field">
+                    <label for="tags">Tag:</label>
+                    <input type="text" id="tags" name="tags" class="input-max-height">
+                </div>
+                <button onclick="sendRecipe()" class="input-max-height">Send!</button>
+            </div>
+            
+        </div>  
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
+    <script src="js/scripts.js"></script>
+</body>
+</html>

@@ -7,34 +7,34 @@
     <title>Shopping List Generator</title>
 </head>
 <body>
-    <ul id="recipeList">
+    <div id='app'>
+        <div class="nav-bar">
+            <ul id="nav">
+                <li class="display-inline nav-element"><a class="nav-link" href="index.html">Shopping List</a></li>
+                <li class="display-inline nav-element"><a class="nav-link" href="recipes.html">Recipes</a></li>
+            </ul>
+        </div>
+        <div class="col-container">
+            <div id="left-column" class="col list-box">
+                <h1 class="col-title">Recipes Available</h1>
+                <ul id="recipeList" class="list">
+                
+                </ul>
+            </div>
+            <div id="right-column" class="col list-box">
+                <h1 class="col-title">Recipes Used</h1>
+                <ul id="recipiesUsedList" class="list">
         
-    </ul>
-    <div>
-        <ul id="recipiesUsedList">
-
-        </ul>
-        <button onclick="getShoppingList()">Generate!</button>
-        <p id="shoppingListOutput"></p>
+                </ul>
+                
+            </div>
+            <div class="output-container animate-in list-box">
+                <h1 class="col-title">Shopping List</h1>
+                <p id="shoppingListOutput" class="shopping-list"></p>
+            </div>
+            <button onclick="getShoppingList()" class="output-button">Generate!</button>
+        </div> 
     </div>
-    <div>
-        <label for="ingName">Ingredient Name:</label>
-        <input type="text" id="ingName" name="ingName">
-        <label for="countBool">Ingredient measured by count.</label>
-        <input type="checkbox" id="countBool" name="countBool">
-        <button id="addIng" onclick="addIngredient()">Add Ingredient!</button> 
-    </div>
-    <div>
-        <ul id="ingList">
-            
-        </ul>
-    </div>
-    <div>
-        <ul id="ingredientsUsed">
-            
-        </ul>
-    </div>
-    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
     <script src="js/scripts.js"></script>
 </body>
