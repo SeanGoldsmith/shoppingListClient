@@ -1,4 +1,5 @@
 let listOfIngredients = [];
+let listOfIngredientsUsed = [];
 
 async function getRecipeList() {
     let recipeList = document.getElementById('recipeList');
@@ -36,6 +37,7 @@ async function getRecipeList() {
 // }
 
 async function getIngredientList() {
+    listOfIngredients=[];
     let ingredients = axios('http:localhost:3200/getIngredients/').then(data => {
                 data.data.forEach(element => {
                     listOfIngredients.push(element);
@@ -50,26 +52,7 @@ function addToUsingList(recipeElem) {
     usingList.appendChild(clone);
 }
 
-function addToUsedIngredients(ingElem) {
-    let clone = ingElem.cloneNode(true);
-    let usingList = document.getElementById('ingredientsUsed');
-    if(clone.firstChild.getAttribute('isCount')=='true') {
-        let input = document.createElement('INPUT');
-        input.setAttribute('type','number');
-        input.style.display='inline';
-        clone.appendChild(input);
-    }
-    else {
-        let input = document.createElement('INPUT');
-        input.setAttribute('type','number');
-        input.style.display='inline';
-        clone.appendChild(input);
-        let select = document.createElement('select');
-        select.innerHTML+=returnOptionsHtml();
-        clone.appendChild(select);
-    }
-    usingList.appendChild(clone);
-}
+
 
 function returnOptionsHtml() {
     let html = "<option value='tsp'>tsp</option> \
@@ -118,6 +101,7 @@ async function addIngredient() {
     console.log(countBool);
     axios.post(`http://localhost:3200/new-ingredient/${ingName}/${countBool}`).then(data => {
         console.log(data.data);
+        getIngredientList();
     }).catch(err => {
         console.log(err.response.data.message);
     })
@@ -171,12 +155,45 @@ function narrowSearch(event) {
             let newSelection = document.createElement("DIV");
             let newText = document.createTextNode(ing.name);
             newSelection.appendChild(newText);
+            newSelection.onclick= () => {addToUsedIngredients(ing)};
+            newSelection.classList.add("single-selection-item");
             selectionContainer.appendChild(newSelection);
         }
     })
     selectionContainer.classList.add("selection-items");
     document.getElementById("autofill-container").appendChild(selectionContainer);
 }
+
+function addToUsedIngredients(ingElem) {
+    removeOldListItems();
+    document.getElementById("ingredient-filter").value="";
+    let usingList = document.getElementById('ingredientsUsed');
+    let newElem = document.createElement("DIV");
+    let newText = document.createTextNode(ingElem.name);
+    let newSpan = document.createElement("SPAN");
+    newSpan.appendChild(newText);
+    newElem.appendChild(newSpan);
+    newElem.classList.add("ingredient-setup");
+    console.log(ingElem);
+    if(ingElem.isMeasuredByCount=="true") {
+        let input = document.createElement('INPUT');
+        input.setAttribute('type','number');
+        input.style.display='inline';
+        newElem.appendChild(input);
+    }
+    else {
+        let input = document.createElement('INPUT');
+        input.setAttribute('type','number');
+        input.style.display='inline';
+        newElem.appendChild(input);
+        let select = document.createElement('select');
+        select.innerHTML+=returnOptionsHtml();
+        newElem.appendChild(select);
+    }
+    usingList.appendChild(newElem);
+}
+
+
 
 getRecipeList();
 getIngredientList();

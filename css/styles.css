@@ -2,22 +2,49 @@
    --gutter: 2em; 
 }
 
+@font-face {
+    font-family: "custom-font";
+    src: url("../../../fonts/BarlowCondensed-Medium.ttf");
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-family: 'custom-font';
+}
+
+button {
+    background-color: white;
+    border: 2px solid black;
+    font-size: 1em;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all .3s;
+}
+
+button:hover {
+    color: white;
+    background-color: black;
+    border-color: grey;
 }
 
 #app {
     width: 65%;
     min-height: 80vh;
     margin: var(--gutter) auto;
-    border: lightblue solid 08px;
+    border: black solid 2px;
     border-radius: 1%;
 }
 
 #ingList {
     width: 80%;
+}
+
+#ingredientsUsed {
+    min-height: 200px;
 }
 
 .col-container {
@@ -50,7 +77,7 @@
 
 .nav-bar {
     width: 100%;
-    background-color: black;
+    background-color: #162e1c;
     color: white;
     padding: 15px;
     font-size: 1.5em;
@@ -96,6 +123,31 @@
 .ingredient-input {
     width: 100%;
     font-size: 1.2em;
+}
+
+.single-selection-item {
+    border: solid #e6e6e6 1px;
+    font-size: 1.2em;
+
+}
+
+.selection-items {
+    
+}
+
+.ingredient-setup {
+    border: #b1e0be solid 1px;
+    border-style: inset;
+    margin: 10px 0px;
+    padding: 5px;
+}
+
+.ingredient-setup input {
+    margin: 0 5px;
+}
+
+.ingredient-setup span {
+    margin: 0px 5px;
 }
 
 .input-max-height {
