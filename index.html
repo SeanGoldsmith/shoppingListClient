@@ -28,13 +28,17 @@
                 </ul>
                 
             </div>
-            <div class="output-container animate-in list-box">
+            <button onclick="getShoppingList()" class="output-button">Generate!</button>
+        </div> 
+        <div id="shopping-list-overlay" class="invisible">
+            <div class="output-container animate-in list-box white-background">
+                <button onclick="closeOverlay()" class="top-right-button">close</button>
                 <h1 class="col-title">Shopping List</h1>
                 <p id="shoppingListOutput" class="shopping-list"></p>
             </div>
-            <button onclick="getShoppingList()" class="output-button">Generate!</button>
-        </div> 
+        </div>
     </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
     <script src="js/scripts.js"></script>
 </body>

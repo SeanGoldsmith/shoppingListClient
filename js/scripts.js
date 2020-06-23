@@ -71,7 +71,7 @@ function printShoppingList(data) {
         text += `${elem}: ${data[elem].amount} ${data[elem].measure} <br>`;
     })
     shoppingListOutput.innerHTML=text;
-    container[0].style.visibility='visible';
+    container[0].style.display='block';
 }
 
 async function generateRecipeList() {
@@ -89,7 +89,10 @@ async function getShoppingList() {
     generateRecipeList().then(data => {
         axios.post('http:/localhost:3200/new-shopping-list/',
             data
-        ).then(result => printShoppingList(result.data)).catch(err => {
+        ).then(result => {
+            printShoppingList(result.data);
+            document.getElementById("shopping-list-overlay").classList.add("visible");
+        }).catch(err => {
             console.log(err.response);
         })
     })
@@ -100,7 +103,7 @@ async function addIngredient() {
     let countBool = document.getElementById("countBool").checked;
     console.log(countBool);
     axios.post(`http://localhost:3200/new-ingredient/${ingName}/${countBool}`).then(data => {
-        console.log(data.data);
+        alert(data.data.message);
         getIngredientList();
     }).catch(err => {
         console.log(err.response.data.message);
@@ -171,9 +174,16 @@ function addToUsedIngredients(ingElem) {
     let newElem = document.createElement("DIV");
     let newText = document.createTextNode(ingElem.name);
     let newSpan = document.createElement("SPAN");
+    let deleteDiv = document.createElement("DIV");
+    let deleteSpan = document.createElement("SPAN");
+    let deleteText = document.createTextNode("X");
+    deleteSpan.appendChild(deleteText);
+    deleteDiv.appendChild(deleteSpan);
     newSpan.appendChild(newText);
     newElem.appendChild(newSpan);
     newElem.classList.add("ingredient-setup");
+    deleteDiv.classList.add("delete-div");
+    deleteSpan.classList.add("delete-span");
     console.log(ingElem);
     if(ingElem.isMeasuredByCount=="true") {
         let input = document.createElement('INPUT');
@@ -190,10 +200,18 @@ function addToUsedIngredients(ingElem) {
         select.innerHTML+=returnOptionsHtml();
         newElem.appendChild(select);
     }
+    newElem.appendChild(deleteDiv);
+    deleteDiv.onclick=() => {removeSelection(newElem)};
     usingList.appendChild(newElem);
 }
 
+function removeSelection(elem) {
+    elem.remove();
+}
 
+function closeOverlay() {
+    document.getElementById("shopping-list-overlay").classList.remove("visible");
+}
 
 getRecipeList();
 getIngredientList();

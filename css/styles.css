@@ -16,8 +16,8 @@
 
 button {
     background-color: white;
-    border: 2px solid black;
-    font-size: 1em;
+    border: 1px solid black;
+    font-size: .8em;
     padding: 5px;
     display: flex;
     justify-content: center;
@@ -28,10 +28,11 @@ button {
 button:hover {
     color: white;
     background-color: black;
-    border-color: grey;
+    cursor: pointer;
 }
 
 #app {
+    position: relative;
     width: 65%;
     min-height: 80vh;
     margin: var(--gutter) auto;
@@ -39,12 +40,32 @@ button:hover {
     border-radius: 1%;
 }
 
+#shopping-list-overlay {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
 #ingList {
-    width: 80%;
+    width: 85%;
 }
 
 #ingredientsUsed {
     min-height: 200px;
+}
+
+.invisible {
+    background-color: rgba(0, 0, 0, 0);
+    display: none;
+}
+
+.visible {
+    transition: background-color 1s;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .col-container {
@@ -61,7 +82,7 @@ button:hover {
 }
 
 .full-width {
-    width: 80%;
+    width: 85%;
 }
 
 .col {
@@ -104,16 +125,15 @@ button:hover {
 }
 
 .output-container {
-    visibility: hidden;
-}
 
-.output-button {
-    width: 100%;
-    margin: auto;
 }
 
 .shopping-list {
     text-align: center;
+}
+
+.white-background {
+    background-color: white;
 }
 
 .autofill-container {
@@ -128,14 +148,14 @@ button:hover {
 .single-selection-item {
     border: solid #e6e6e6 1px;
     font-size: 1.2em;
-
 }
 
-.selection-items {
-    
+.single-selection-item {
+    cursor: pointer;
 }
 
 .ingredient-setup {
+    position: relative;
     border: #b1e0be solid 1px;
     border-style: inset;
     margin: 10px 0px;
@@ -152,6 +172,34 @@ button:hover {
 
 .input-max-height {
     max-height: 2em;
+}
+
+.inline {
+    display: inline;
+}
+
+.delete-div {
+    position: absolute;
+    border: solid 1px black;
+    display: inline;
+    right: 5px;
+    transition: all .25s;
+}
+
+.delete-div:hover {
+    background-color: black;
+    color: white;
+    cursor: pointer;
+}
+
+.delete-span {
+    text-align: center;
+}
+
+.top-right-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
 }
 
 .animate-in {
