@@ -113,9 +113,14 @@ button:hover {
  color: white;
 }
 
+.recipes-available-item {
+    margin: 10px 0px;
+}
+
 .col-title {
     width: 100%;
     text-align: center;
+    margin: 10px 0px;
 }
 
 .list {
@@ -215,4 +220,32 @@ button:hover {
     }
 }
 
+@media only screen and (max-width: 650px) {
+    .col-container {
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .col {
+        align-self: center;
+        width: 80%;
+    }
+    .output-button {
+        align-self: center;
+    }
+    .col-title {
+        font-size: 1.5em;
+    }
+    label {
+        width: 100%;
+        text-align: center;
+    }
+    input {
+        width: 100%;
+        text-align: center;
+    }
+    .add-ing-button {
+        width: 100%;
+    }
+}
 

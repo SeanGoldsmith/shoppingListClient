@@ -12,6 +12,7 @@ async function getRecipeList() {
             newElem.onclick=() => {
                 addToUsingList(newElem);
             }
+            newElem.classList.add("recipes-available-item");
             recipeList.appendChild(newElem);
         });
     })
@@ -120,7 +121,7 @@ async function sendRecipe() {
         let newIng = {};
         newIng.name = ingredientChildren[i].firstChild.textContent;
         newIng.amount = ingredientChildren[i].getElementsByTagName('input')[0].value;
-        if(ingredientChildren[i].children.length==3){
+        if(ingredientChildren[i].children.length==4){
             newIng.measure = ingredientChildren[i].getElementsByTagName('select')[0].value;
         }
         else {
